@@ -1,17 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
 <head>
     <meta charset="UTF-8">
     <title>Welcome to Next Word Predictor for VSN _/\_ </title>
 </head>
 
-<body>
-<form method="post">
-    <input type="string" name="vsn_inp" >
-    <input type="submit">
-</form>
+    <body>
+        <div class = "container"> 
+            <form method="post">
+                <div class = "inp1"> 
+                    <input type="string" name="vsn_inp" >
+                </div>
+                
+                <button type="submit" class="btn btn-primary">Predict Next Word !</button>
+            </form>
 
-<p> Result: {{ result }} </p>
+        </div>
+    </body>
 
-</body>
 </html>
