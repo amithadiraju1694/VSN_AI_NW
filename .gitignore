@@ -1,2 +1,6 @@
 /src/venvcreds.txt
 __pycache__
+.vscode
+docker-compose-dev.yaml
+../.DS_Store
+.DS_Store
