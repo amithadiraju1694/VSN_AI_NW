@@ -5,10 +5,14 @@ from fastapi.templating import Jinja2Templates
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import HTMLResponse
 
+from model.pred_nw import predict_next_word
+
 app = FastAPI()
 templates = Jinja2Templates(directory="templates")
 templates.env.autoescape = False
-app.mount("/static", StaticFiles(directory="static"), name="static")  # define the directory for the static files
+app.mount("/static", 
+StaticFiles(directory="static"),
+ name="static")  # define the directory for the static files
 
 
 @app.get("/", response_class=HTMLResponse)
@@ -22,4 +26,7 @@ async def bizl(request: Request):
 
     user_typed = user_form.get("vsn_inp")
 
-    return templates.TemplateResponse('default.html', context={'request': request , 'result' : user_typed})
+    # Call for model predictions here
+
+    return templates.TemplateResponse('default.html', context={'request': request ,
+     'result' : user_typed})
