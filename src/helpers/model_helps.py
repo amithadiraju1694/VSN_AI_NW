@@ -1,5 +1,6 @@
 import tensorflow as tf
 from typing import List
+from pathlib import Path
 
 def encode_data(sentences: List[str], vocab: List[str]):
     encoded_docs = [ ]
@@ -25,5 +26,9 @@ def pad_data(encoded_data: List[int],
 
 
 def load_model():
+
+    src_path = Path(__file__).parent.parent
+    model_path = str(src_path) + "/model/VSN_NW"
+
     return tf.saved_model\
-        .load("../model/VSN_NW")
+        .load(model_path)

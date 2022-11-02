@@ -7,4 +7,3 @@ docker-compose-dev.yaml
 VSN.txt
 test.py
 .ipynb_checkpoints
-/src/model/VSN_NW
