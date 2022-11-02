@@ -5,9 +5,15 @@ from typing import List
 
 vocab = load_vocab()
 
-def predict_next_word(sentences: List[str], model):
+def pre_process_data(sentences: List[str]):
     encoded_docs = encode_data(sentences, vocab)
     padded_docs = pad_data(encoded_docs, vocab)
+
+    return padded_docs
+
+
+def predict_next_word(sentences: List[str], model):
+    padded_docs = pre_process_data(sentences)
     predictions = model(padded_docs)
 
     return predictions
