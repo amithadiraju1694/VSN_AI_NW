@@ -2,11 +2,19 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Oops</title>
+    <title>Results</title>
 </head>
 <body>
 
-<p>You Typed: {{ result }}</p> 
+    <script>
+        var x ="", i;
+        for (i=0; i<=result.length; i++) {
+          x = x + "<p">"We Predicted Next Word as:  " + result[i] + "</p">"";
+        }
+        document.getElementById("demo").innerHTML = x;
+        </script>
+
+<p>We Predicted Next Word as : {{ result }}</p> 
 
 <p> But Sorry we're still under constructions</p>
 

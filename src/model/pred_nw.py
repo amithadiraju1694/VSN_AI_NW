@@ -1,6 +1,9 @@
 import tensorflow as tf
-from ..helpers.load_assets import load_vocab
-from ..helpers.model_helps import encode_data, pad_data
+
+from helpers.load_assets import load_vocab
+from helpers.model_helps import encode_data, pad_data
+
+
 from typing import List
 
 vocab = load_vocab()
@@ -16,7 +19,9 @@ def predict_next_word(sentences: List[str], model):
     padded_docs = pre_process_data(sentences)
     predictions = model(padded_docs)
 
-    return predictions
+    return post_process( 
+        predictions
+    )
 
 def post_process(logits_tensor) -> List[str]:
     word_indices = tf.math.argmax(logits_tensor, 1).numpy()

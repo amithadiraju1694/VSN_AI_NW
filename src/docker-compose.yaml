@@ -4,11 +4,11 @@ services:
  # Name of Container 
  vsnai-test-cont:
   # Build an image first from source code
-  # build:
-  #  # Build in current directory
-  #  context: .
+  build:
+   # Build in current directory
+   context: .
   # Name the image as bellow 
-  image: gs-vsnai
+  #image: gs-vsnai
   # Use this port mapping
 
   working_dir: /src

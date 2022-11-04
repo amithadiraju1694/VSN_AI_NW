@@ -7,6 +7,9 @@ WORKDIR /src
 # Copy from source to destination
 COPY requirements.txt /src/requirements.txt
 
+# Upgrade pip , just in case
+RUN pip3 install --upgrade pip
+
 # Run this command in terminal
 RUN pip3 install --no-cache-dir -r /src/requirements.txt
 
