@@ -15,6 +15,8 @@ def log_encoded_docs(encoded_docs):
 
     for d in encoded_docs:
         print("\n No.of words encoded in this doc: ", len(d))
+
+        print("\n Encoded document: ", d)
     
     return
 
@@ -45,7 +47,7 @@ def encode_data(sentences: List[str], vocab: List[str]):
         
         encoded_docs.append(cur_enc)
 
-    #log_encoded_docs(encoded_docs)
+    log_encoded_docs(encoded_docs)
 
     return encoded_docs
 
