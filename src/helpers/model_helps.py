@@ -1,6 +1,7 @@
 import tensorflow as tf
 from typing import List
 from pathlib import Path
+from unidecode import unidecode
 import unicodedata
 
 def normalize_unicode(st: str) -> str:
@@ -36,14 +37,13 @@ def encode_data(sentences: List[str], vocab: List[str]):
     encoded_docs = [ ]
     for d in sentences:
         cur_enc = [ ]
+        d = normalize_unicode( unidecode(d).replace("'", " ") )
+
         for w in d.split(" "):
-            if isascii(w):
-                pass
-            else:
-                w = normalize_unicode(w)
-            cur_enc.append(
-            float( vocab.index( w ) ) 
-            )
+            if w != " ":
+                cur_enc.append(
+                float( vocab.index( w ) ) 
+                )
         
         encoded_docs.append(cur_enc)
 
@@ -56,7 +56,7 @@ def pad_data(encoded_data: List[int],
     return tf.cast( 
         tf.keras.preprocessing\
         .sequence.pad_sequences(
-            encoded_data, maxlen=8,
+            encoded_data, maxlen=9,
             padding='post' , value = vocab.index('UNK')
         )
     , dtype = tf.float32
