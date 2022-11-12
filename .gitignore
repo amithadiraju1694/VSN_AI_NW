@@ -9,3 +9,6 @@ test.py
 .ipynb_checkpoints
 src/__pycache__
 model/__pycache__
+abc.py
+*.yaml
+*.yml

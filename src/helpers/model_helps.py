@@ -3,6 +3,10 @@ from typing import List
 from pathlib import Path
 from unidecode import unidecode
 import unicodedata
+from helpers.load_assets import load_dp_meta
+
+train_metadata = load_dp_meta()
+
 
 def normalize_unicode(st: str) -> str:
     return unicodedata.normalize('NFD', st)
@@ -31,33 +35,49 @@ def validate_inp_text(usr_typ_str: str) -> List[str]:
     
     return [usr_typ_str.strip()]
 
+def get_maxnum_words(words: List[str]) -> List[str]:
+    
+    max_words = [ ]; ci = 0; 
+    spec_chars = {"":0, " ":0 , "\n": 0,"@":0, ".":0,
+    "\t": 0, "-": 0, "_": 0, "+": 0, "*": 0, "%":0,
+    "&":0, "#":0,"!":0, "?":0, "/": 0}
+
+    while len(max_words) < train_metadata.get("max_length"):
+
+        # Identify if current word can be put in end list
+        if (words[ci].isalpha()) or (spec_chars.get(words[ci], None) == None):
+            max_words.append(words[ci])
+        
+        ci +=1
+    return max_words
 
 
-def encode_data(sentences: List[str], vocab: List[str]):
+
+def encode_data(sentences: List[str], vocab: dict[str]):
     encoded_docs = [ ]
     for d in sentences:
-        cur_enc = [ ]
         d = normalize_unicode( unidecode(d).replace("'", " ") )
 
-        for w in d.split(" "):
-            if w != " ":
-                cur_enc.append(
-                float( vocab.index( w ) ) 
-                )
-        
-        encoded_docs.append(cur_enc)
+        words = d.split(" ")
+        max_num_words = get_maxnum_words(words)
+
+        encoded_docs.append(
+            [ float(vocab.get(w))\
+             for w in max_num_words if w !=" " and (
+                vocab.get(w) != None) ]
+        )
 
     log_encoded_docs(encoded_docs)
 
     return encoded_docs
 
 def pad_data(encoded_data: List[int],
- vocab: List[str]):
+ vocab: dict[str]):
     return tf.cast( 
         tf.keras.preprocessing\
         .sequence.pad_sequences(
-            encoded_data, maxlen=9,
-            padding='post' , value = vocab.index('UNK')
+            encoded_data, maxlen=train_metadata.get("max_length"),
+            padding='post' , value = vocab.get('UNK')
         )
     , dtype = tf.float32
     )
@@ -65,7 +85,7 @@ def pad_data(encoded_data: List[int],
 def load_model():
 
     src_path = Path(__file__).parent.parent
-    model_path = str(src_path) + "/model/VSN_NW"
+    model_path = str(src_path) + "/assets/VSN_NW"
 
     return tf.saved_model\
         .load(model_path)
