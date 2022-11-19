@@ -32,6 +32,7 @@ async def get_usage_page(request: Request):
 
 @app.post("/", response_class=HTMLResponse)
 async def bizl(request: Request):
+    """ Entire business logic works from here."""
     user_form = await request.form()
 
     user_typed = user_form.get("vsn_inp")
