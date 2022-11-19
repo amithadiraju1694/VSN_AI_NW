@@ -12,3 +12,8 @@ model/__pycache__
 abc.py
 *.yaml
 *.yml
+src/tests
+src/.pytest_cache
+src/build
+src/dist
+src/helpers.egg*

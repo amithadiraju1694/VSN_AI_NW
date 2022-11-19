@@ -25,7 +25,7 @@ def log_encoded_docs(encoded_docs):
     
     return
 
-def validate_inp_text(usr_typ_str: str) -> List[str]:
+async def validate_inp_text(usr_typ_str: str) -> List[str]:
 
     if "" == usr_typ_str or " " == usr_typ_str: return []
 
@@ -42,7 +42,10 @@ def get_maxnum_words(words: List[str]) -> List[str]:
     "\t": 0, "-": 0, "_": 0, "+": 0, "*": 0, "%":0,
     "&":0, "#":0,"!":0, "?":0, "/": 0}
 
-    while len(max_words) < train_metadata.get("max_length"):
+    wl = len(words)
+
+    while (len(max_words) < train_metadata.get("max_length")
+    ) and ci < wl:
 
         # Identify if current word can be put in end list
         if (words[ci].isalpha()) or (spec_chars.get(words[ci], None) == None):

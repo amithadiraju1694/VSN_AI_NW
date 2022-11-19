@@ -20,7 +20,9 @@
         <div class="top-div" > 
             <form method="post">
                 <div class = "mid-div"> 
-                    <input type="text" name="vsn_inp" class ="form-control" size="54" placeholder="Enter few words of any shloka in english">
+                    <input type="text" name="vsn_inp" 
+                    class ="form-control" size="54" 
+                    placeholder="Enter few words of any shloka in english">
 
                     
                 </div>
@@ -30,8 +32,10 @@
                 
                 
             </form>
-
-        </div>
+            <a href= "{{ url_for('get_usage_page') }}"   >
+                <button type="submit"> How to Use App </button>
+            </a>
+        </div> <!-- Top Div ends here -->
     </body>
 
 </html>

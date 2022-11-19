@@ -21,8 +21,14 @@ StaticFiles(directory="static"),
 
 @app.get("/", response_class=HTMLResponse)
 async def get_inp_text( request: Request ):
-    return templates.TemplateResponse('home.html', context={'request': request })
+    return templates.TemplateResponse('home.html',
+     context={'request': request })
 
+@app.get("/useapp", response_class=HTMLResponse)
+async def get_usage_page(request: Request):
+    return templates.TemplateResponse( 'app_usage.html',
+    context={'request': request}
+    )
 
 @app.post("/", response_class=HTMLResponse)
 async def bizl(request: Request):
@@ -31,16 +37,15 @@ async def bizl(request: Request):
     user_typed = user_form.get("vsn_inp")
     
     st_pred = time.time()
-    #TODO: 2. Re-train model to remove ' char from before a word
-    #TODO: 3. Loop through results from model and print in new lines in html tags
-    shlokas = validate_inp_text(user_typed)
+    
+    shlokas = await validate_inp_text(user_typed)
 
     print("\n Returned shlokas: ", shlokas)
 
 
     if len(shlokas) > 0:
-        # Call for model predictions here
-        predictions = predict_next_word(sentences=shlokas, model = saved_model)
+        predictions = await predict_next_word(sentences=shlokas,
+         model = saved_model)
 
         en_pred = time.time()
 
@@ -49,5 +54,10 @@ async def bizl(request: Request):
     else:
         predictions = ["NONE"]
 
-    return templates.TemplateResponse('default.html', context={'request': request ,
-     'result' : predictions})
+    ret_results = dict(  zip(shlokas, predictions) )
+
+    return templates.TemplateResponse('default.html',
+     context={'request': request ,
+     'results' : ret_results
+     })
+
