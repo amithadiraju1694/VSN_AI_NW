@@ -1,4 +1,3 @@
-import os
 import re
 from pathlib import Path
 import json
@@ -29,7 +28,6 @@ def load_vocab():
 def load_dp_meta():
 
     metadata_path = src_path+"/assets/dataprep_metadata.json"
-    print(metadata_path)
     with open(metadata_path, 'r') as mdf:
         jobj = json.load(mdf)
     

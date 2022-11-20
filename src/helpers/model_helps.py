@@ -3,9 +3,10 @@ from typing import List
 from pathlib import Path
 from unidecode import unidecode
 import unicodedata
-from helpers.load_assets import load_dp_meta
+from src.helpers.load_assets import load_dp_meta
 
 train_metadata = load_dp_meta()
+Encoded_Data = List[List[float]]
 
 
 def normalize_unicode(st: str) -> str:
@@ -56,12 +57,14 @@ def get_maxnum_words(words: List[str]) -> List[str]:
 
 
 
-def encode_data(sentences: List[str], vocab: dict[str]):
+def encode_data(sentences: List[str], vocab: dict[str]) ->Encoded_Data:
     encoded_docs = [ ]
     for d in sentences:
         d = normalize_unicode( unidecode(d).replace("'", " ") )
 
         words = d.split(" ")
+
+        #TODO: Check for empty strings and not run full eval for it
         max_num_words = get_maxnum_words(words)
 
         encoded_docs.append(

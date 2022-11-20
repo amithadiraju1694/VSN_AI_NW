@@ -1,22 +1,19 @@
-from typing import Union
-
 from fastapi import FastAPI, Request,Form, Response
 from fastapi.templating import Jinja2Templates
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import HTMLResponse
 
 import time
-from model.pred_nw import predict_next_word
-from helpers.model_helps import load_model, validate_inp_text
+from src.model.pred_nw import predict_next_word
+from src.helpers.model_helps import load_model, validate_inp_text
+from typing import Union
 
 app = FastAPI()
 saved_model = load_model()
 
-templates = Jinja2Templates(directory="templates")
+templates = Jinja2Templates(directory="./src/templates")
 templates.env.autoescape = False
-app.mount("/static", 
-StaticFiles(directory="static"),
- name="static")  # define the directory for the static files
+app.mount("/src/static", StaticFiles(directory="./src/static"),name="static")  # define the directory for the static files
 
 
 @app.get("/", response_class=HTMLResponse)
@@ -57,8 +54,9 @@ async def bizl(request: Request):
 
     ret_results = dict(  zip(shlokas, predictions) )
 
-    return templates.TemplateResponse('default.html',
+    return templates.TemplateResponse('results.html',
      context={'request': request ,
      'results' : ret_results
      })
 
+#TODO: Replace EOS, with end of sentence

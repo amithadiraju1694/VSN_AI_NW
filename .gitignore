@@ -17,3 +17,4 @@ src/.pytest_cache
 src/build
 src/dist
 src/helpers.egg*
+setup.py
