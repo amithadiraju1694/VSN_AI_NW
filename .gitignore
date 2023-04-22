@@ -10,11 +10,14 @@ test.py
 src/__pycache__
 model/__pycache__
 abc.py
-*.yaml
-*.yml
+create_pod.yaml
+create_deployment.yml
+create_service.yml
 src/tests
-src/.pytest_cache
+.pytest_cache
 src/build
 src/dist
 src/helpers.egg*
 setup.py
+src/test_dolder/.pytest_cache
+Makefile

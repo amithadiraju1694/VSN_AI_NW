@@ -35,7 +35,7 @@ async def bizl(request: Request):
     user_typed = user_form.get("vsn_inp")
     
     st_pred = time.time()
-    
+   
     shlokas = await validate_inp_text(user_typed)
 
     print("\n Returned shlokas: ", shlokas)
@@ -58,5 +58,3 @@ async def bizl(request: Request):
      context={'request': request ,
      'results' : ret_results
      })
-
-#TODO: Replace EOS, with end of sentence

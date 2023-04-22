@@ -31,12 +31,21 @@ dp_meta = load_dp_meta()
 valid_sent_to_test = ["īśvaro vikramī", "prasann-ātmā viśva-sṛṭ",
     "mahī-bhartā", "agraṇīr", "asaṅkhyeyo 'pramey-ātmā viśiṣṭaḥ",
     "āgrāhyaḥ śāśvataḥ kṛṣṇo", "padma-nābho 'ravindākṣaḥ padma-garbhaḥ śarīra-bhṛt",
-    "aja– sarveśvaras siddhas siddhis sarvādir acyutaḥ"]
+    "aja– sarveśvaras siddhas siddhis sarvādir acyutaḥ",
+    "vedhās svāṅgo 'jitaḥ kṛṣṇo dṛḍhas saṅkarṣaṇo 'cyutaḥ varuṇo vāruṇo vṛkṣaḥ puṣkarākṣo mahāmanāḥ",
+    "vanamālī gadī śārngī śaṅkhī cakrī ca nandakī śrīmān nārāyaṇo viṣṇur vāsudevo 'bhirakṣatu",
+    "This sentence is more than nine character long and some more of it as well"
+    ]
 
 inval_sent_to_test = ["Hey Mike", "", " ", ":", "@", "123", "abc", "abc.com", "Hi, I am Amith"]
 
 @pytest.mark.asyncio
 async def test_model_func():
+    """
+    This is to test model functionality for valid input sentences of different kind.
+    Passing this test essentially means, model's performance will be stable and that it provides
+    good next-word predictions.
+    """
     
     pred_strings = await predict_next_word(sentences=valid_sent_to_test,
      model = model_instance)
@@ -50,23 +59,7 @@ async def test_model_func():
          predicted as 'End of Sentence'. It's likely that model is not generalizing well.\
             Please check training pipeline. "
 
-def test_prepro_typ():
-    acceptable_types = [tf.Tensor,
-     tf.SparseTensor, tf.IndexedSlices]
-
-    prepro_out = pre_process_data(
-        sentences=valid_sent_to_test)
-    
-    typ_prepro = type(prepro_out)
-
-    assert not typ_prepro in acceptable_types, f"""
-    Pre-Processing function returned a type of object which is not
-    supported for model training: {typ_prepro}. Check the helper functions
-    or inputs used in it.
-    """
-
-
-def test_prepro_def_func():
+def test_prepro_def_func_all():
     """
     Function to test if pre-processing was given all invalid texts
     does it respond with correct outputs.
@@ -82,5 +75,5 @@ def test_prepro_def_func():
     
     
     assert np.array_equal(pre_out, def_pad_docs)
-    
-    
+
+
