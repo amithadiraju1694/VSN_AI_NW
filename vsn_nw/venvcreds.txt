@@ -1,0 +1,5 @@
+source /Users/aadir00/AlbtestTF/bin/activate
+
+docker build -t gs-vsnai .
+
+docker run -dp 8000:8000 -v "$(pwd):/src" --name vsnai-test-cont gs-vsnai 

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+
+<!-- Custom CSS -->
+<link href="{{ url_for('static', path='/css/style.css') }}" rel="stylesheet">
+
+
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+
+
+<head>
+    <meta charset="UTF-8">
+    <title>Welcome to VSN Next Word Predictor_/\_</title>
+</head>
+
+    <body>
+
+        <div class="top-div" > 
+            <form method="post">
+                <div class = "mid-div"> 
+                    <input type="text" name="vsn_inp" 
+                    class ="form-control" size="54" 
+                    placeholder="Enter few words of any shloka in english">
+
+                    
+                </div>
+                <button type="submit" 
+                class="btn btn-primary" id="subbut"
+                >Predict Next Word !</button>
+                
+                
+            </form>
+            <a href= "{{ url_for('get_usage_page') }}"   >
+                <button type="submit"> How to Use App </button>
+            </a>
+        </div> <!-- Top Div ends here -->
+    </body>
+
+</html>
