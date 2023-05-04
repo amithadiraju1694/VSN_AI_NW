@@ -1,22 +1,21 @@
-from typing import Union
-
 from fastapi import FastAPI, Request,Form, Response
 from fastapi.templating import Jinja2Templates
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import HTMLResponse
 
 import time
-from model.pred_nw import predict_next_word
-from helpers.model_helps import load_model, validate_inp_text
+from vsn_nw.model.pred_nw import predict_next_word
+
+from vsn_nw.helpers.model_helps import load_model, validate_inp_text
+from typing import Union
 
 app = FastAPI()
 saved_model = load_model()
 
-templates = Jinja2Templates(directory="templates")
+#directory: path inside docker container where these files are to be found
+templates = Jinja2Templates(directory="./vsn_nw/templates")
 templates.env.autoescape = False
-app.mount("/static", 
-StaticFiles(directory="static"),
- name="static")  # define the directory for the static files
+app.mount("/vsn_nw/static", StaticFiles(directory="./vsn_nw/static"),name="static")  # define the directory for the static files
 
 
 @app.get("/", response_class=HTMLResponse)
@@ -32,12 +31,13 @@ async def get_usage_page(request: Request):
 
 @app.post("/", response_class=HTMLResponse)
 async def bizl(request: Request):
+    """ Entire business logic works from here."""
     user_form = await request.form()
 
     user_typed = user_form.get("vsn_inp")
     
     st_pred = time.time()
-    
+   
     shlokas = await validate_inp_text(user_typed)
 
     print("\n Returned shlokas: ", shlokas)
@@ -56,8 +56,7 @@ async def bizl(request: Request):
 
     ret_results = dict(  zip(shlokas, predictions) )
 
-    return templates.TemplateResponse('default.html',
+    return templates.TemplateResponse('results.html',
      context={'request': request ,
      'results' : ret_results
      })
-

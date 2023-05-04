@@ -1,0 +1,56 @@
+
+
+# DEPLOYMENT WITH 1 replica
+apiVersion: apps/v1
+kind: Deployment
+
+metadata:
+  name: vsn-nw
+
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: vsn-nw
+
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+  
+  minReadySeconds: 5 
+  
+  template:
+    metadata:
+      labels:
+        app: vsn-nw
+    
+    spec:
+      nodeSelector:
+        "kubernetes.io/os": linux
+      
+      containers:
+      - name: vsn-nw
+        image: amithainlp.azurecr.io/vsn_next_word:v1
+        ports:
+        - containerPort: 8000
+        
+        resources:
+          requests:
+            cpu: 2500m
+          limits:
+            cpu: 5000m
+  
+---
+
+# LOADBALANCER SERVICE
+apiVersion: v1
+kind: Service
+metadata:
+  name: vsn-nw
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 8000
+  selector:
+    app: vsn-nw

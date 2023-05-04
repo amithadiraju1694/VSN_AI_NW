@@ -51,15 +51,22 @@
       </thead>
   {% for typ_shlk,pre_nw in results.items() %}
           <tbody>
-            {% if pre_nw != "nandano"  %}     
+            {% if pre_nw != "UNK" and pre_nw != "NONE" and pre_nw != "EOS"  %}     
             <tr class="success">
               <td><p class="font-weight-bold">{{typ_shlk}} </p> </td>
               <td><p class="font-weight-bold">{{pre_nw}} </p> </td>
             </tr>
+            
+            {% elif pre_nw == "EOS" %}
+            <tr class="info">
+              <td><p class="font-weight-bold">{{typ_shlk}} </p> </td>
+              <td><p class="font-weight-bold"> End of this Sentence </p> </td>
+            </tr>
+
             {% else %}
             <tr class="danger">
               <td><p class="font-weight-bold">{{typ_shlk}} </p> </td>
-              <td><p class="font-weight-bold">{{pre_nw}} </p> </td>
+              <td><p class="font-weight-bold"> Invalid Input Text </p> </td>
             </tr>
             {% endif %}
 
