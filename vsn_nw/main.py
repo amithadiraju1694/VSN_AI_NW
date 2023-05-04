@@ -1,3 +1,6 @@
+
+# CREATING THIS BRANCH to perform inference through onnx format
+# to check if docker image size can be reduced
 from fastapi import FastAPI, Request,Form, Response
 from fastapi.templating import Jinja2Templates
 from fastapi.staticfiles import StaticFiles
