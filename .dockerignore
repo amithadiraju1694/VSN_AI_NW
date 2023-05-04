@@ -12,6 +12,10 @@ README.md
 **/env
 ./venvcreds.txt
 __pycache__
-src/test_folder
-src/helpers/__pycache__
-src/model/__pycache__
+.pytest_cache
+.vscode
+vsn_nw/test_folder
+vsn_nw/helpers/__pycache__
+vsn_nw/model/__pycache__
+vsn_nw/static/images/VSN_back1.jpeg
+vsn_nw/static/images/VSN_back2.jpeg
