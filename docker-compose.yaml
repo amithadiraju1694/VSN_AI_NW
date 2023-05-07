@@ -4,7 +4,7 @@ services:
  
 
   vsn-cont1:
-    image: $DOCKER_REGISTRY/vsn_next_word:latest
+    image: vsn_next_word:v2
     pull_policy: if_not_present
     
     working_dir: /vsn_nw
@@ -21,7 +21,7 @@ services:
     # build:
     # context: .
     # Name the image as bellow 
-    image: $DOCKER_REGISTRY/vsn_next_word:latest
+    image: vsn_next_word:v2
     pull_policy: if_not_present
   # Use this port mapping
 

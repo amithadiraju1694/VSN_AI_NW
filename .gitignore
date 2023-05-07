@@ -23,3 +23,5 @@ zaks_aks_host/deployment.yaml
 /vsn_nw/templates/legacy_home.html
 vsn_nw/static/images/VSN_back1.jpeg
 vsn_nw/static/images/VSN_back2.jpeg
+vsn_nw/test.py
+requirements1.txt

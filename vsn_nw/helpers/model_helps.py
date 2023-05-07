@@ -3,15 +3,19 @@ import unicodedata
 from pathlib import Path
 from typing import List, Union
 
-import tensorflow as tf
+import onnxruntime as rt
+import nltk
+import numpy as np
 from typeguard import typechecked
 from unidecode import unidecode
+
 
 from vsn_nw.helpers.load_assets import load_dp_meta, load_vocab
 
 train_metadata = load_dp_meta()
 Encoded_Data = List[List[float]]
 w2i, _ = load_vocab()
+#TODO: TO remove tf dependency, write custom padding function
 
 
 def find_min_word_len(w2i: dict[str, int]) -> int:
@@ -123,27 +127,44 @@ def encode_data(sentences: List[str], vocab: dict[str, int]) -> Encoded_Data:
             ]
         )
 
-    log_encoded_docs(encoded_docs)
+    #log_encoded_docs(encoded_docs)
 
     return encoded_docs
 
 
 @typechecked
 def pad_data(encoded_data: Encoded_Data, vocab: dict[str, int]):
-    return tf.cast(
-        tf.keras.preprocessing.sequence.pad_sequences(
-            encoded_data,
-            maxlen=train_metadata.get("max_length"),
-            padding="post",
-            value=vocab.get("UNK"),
-        ),
-        dtype=tf.float32,
+    
+    # return tf.cast(
+    #     tf.keras.preprocessing.sequence.pad_sequences(
+    #         encoded_data,
+    #         maxlen=train_metadata.get("max_length"),
+    #         padding="post",
+    #         value=vocab.get("UNK"),
+    #     ),
+    #     dtype=tf.float32,
+    # )
+    padded_docs = [ [*nltk.pad_sequence(sequence=doc,
+                                       n=train_metadata.get("max_length")-len(doc)+1,
+                                       pad_right=True,
+                                       right_pad_symbol=vocab.get("UNK") )
+                    ] for doc in encoded_data 
+                  ]
+    
+    return np.float32(
+        np.vstack(padded_docs)
     )
+    
+
 
 
 def load_model():
 
     src_path = Path(__file__).parent.parent
-    model_path = str(src_path) + "/assets/VSN_NW"
+    model_path = str(src_path) + "/assets/sequential.onnx"
 
-    return tf.saved_model.load(model_path)
+    prv = ['CPUExecutionProvider']
+
+    m = rt.InferenceSession(model_path, providers=prv)
+
+    return m

@@ -19,7 +19,6 @@ from vsn_nw.helpers.model_helps import load_model
 from vsn_nw.helpers.load_assets import load_vocab, load_dp_meta
 
 import pytest
-import tensorflow as tf
 import numpy as np
 
 

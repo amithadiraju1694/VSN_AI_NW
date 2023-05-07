@@ -1,7 +1,7 @@
 
 # CREATING THIS BRANCH to perform inference through onnx format
 # to check if docker image size can be reduced
-from fastapi import FastAPI, Request,Form, Response
+from fastapi import FastAPI, Request
 from fastapi.templating import Jinja2Templates
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import HTMLResponse
@@ -10,7 +10,6 @@ import time
 from vsn_nw.model.pred_nw import predict_next_word
 
 from vsn_nw.helpers.model_helps import load_model, validate_inp_text
-from typing import Union
 
 app = FastAPI()
 saved_model = load_model()
