@@ -134,16 +134,6 @@ def encode_data(sentences: List[str], vocab: dict[str, int]) -> Encoded_Data:
 
 @typechecked
 def pad_data(encoded_data: Encoded_Data, vocab: dict[str, int]):
-    
-    # return tf.cast(
-    #     tf.keras.preprocessing.sequence.pad_sequences(
-    #         encoded_data,
-    #         maxlen=train_metadata.get("max_length"),
-    #         padding="post",
-    #         value=vocab.get("UNK"),
-    #     ),
-    #     dtype=tf.float32,
-    # )
     padded_docs = [ [*nltk.pad_sequence(sequence=doc,
                                        n=train_metadata.get("max_length")-len(doc)+1,
                                        pad_right=True,

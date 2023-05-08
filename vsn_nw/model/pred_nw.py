@@ -57,7 +57,7 @@ async def predict_next_word(sentences: List[str], model):
 
 
 @typechecked
-async def post_process(logits_tensor: List[np.ndarray] ) -> List[str]:
+async def post_process(logits_tensor ) -> List[str]:
 
     word_indices = np.zeros(shape=(len(logits_tensor),))
 
