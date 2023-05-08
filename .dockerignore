@@ -20,5 +20,7 @@ vsn_nw/model/__pycache__
 vsn_nw/static/images/VSN_back1.jpeg
 vsn_nw/static/images/VSN_back2.jpeg
 test.py
-requirements1.txt
-
+legacy_items
+educative_aks_host
+misc
+zks_aks_host

@@ -17,11 +17,11 @@ vsn_nw/helpers.egg*
 setup.py
 vsn_nw/test_folder/.pytest_cache
 Makefile
-educative_aks_host
-misc
 zaks_aks_host/deployment.yaml
 /vsn_nw/templates/legacy_home.html
 vsn_nw/static/images/VSN_back1.jpeg
 vsn_nw/static/images/VSN_back2.jpeg
 vsn_nw/test.py
-requirements1.txt
+legacy_items
+educative_aks_host
+misc
