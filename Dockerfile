@@ -1,5 +1,5 @@
 # syntax=docker/dockerfile:1
-FROM python:3.9.6
+FROM python:3.9-slim
 
 # Location where 'CMD' needs to run in docker, can provide new directory name
 WORKDIR /VSN_AI_NW
